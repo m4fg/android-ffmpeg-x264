@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # set to path of your NDK (or export NDK to environment)
+NDK=/Users/jkoehl/Dev/android-ndk
 
 if [[ "x$NDK" == "x" ]]; then
 NDK=~/apps/android-ndk-r5c
@@ -22,7 +23,9 @@ function current_dir {
   echo "$(cd "$(dirname $0)"; pwd)"
 }
 
+export RANLIB="arm-linux-androideabi-ranlib"
 export PATH=$PATH:$NDK:$(current_dir)/toolchain/bin
 
 echo $PATH
+echo $RANLIB
 

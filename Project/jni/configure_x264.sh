@@ -6,6 +6,9 @@ pushd x264
 
 ./configure --cross-prefix=arm-linux-androideabi- \
 --enable-pic \
---host=arm-linux 
+--enable-static \
+--disable-cli \
+--disable-asm \
+--host=arm-linux
 
 popd;popd
