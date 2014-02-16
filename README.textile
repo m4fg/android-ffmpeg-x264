@@ -1,3 +1,7 @@
+h1. Batterii version
+
+The version I started with wasn't quite working on the Mac.  This fork is an attempt to fix that and to make it work for our needs.
+
 h1. Read me first (that's why I'm at the top!)
 
 I'm not going to be working on this at all for the forseeable future, and I won't have time to answer questions about why it doesn't compile on your platform or has something missing.
