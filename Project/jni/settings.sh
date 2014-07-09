@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # set to path of your NDK (or export NDK to environment)
-NDK=/Users/jkoehl/Dev/android-ndk
+#NDK=/Users/jkoehl/Dev/android-ndk
 
 if [[ "x$NDK" == "x" ]]; then
 NDK=~/apps/android-ndk-r5c

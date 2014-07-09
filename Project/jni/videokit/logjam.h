@@ -1,6 +1,7 @@
 #ifndef LOGJAM_H
 #define LOGJAM_H
 
+#include <jni.h>
 #include <android/log.h> 
 
 #define LOGTAG "Videokit"

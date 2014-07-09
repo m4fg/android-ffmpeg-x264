@@ -8,18 +8,12 @@
 #include <stdbool.h>
 
 int main(int argc, char **argv);
+extern int received_sigterm;
 
 JavaVM *sVm = NULL;
 
 #define LOG_ERROR(message) __android_log_write(ANDROID_LOG_ERROR, "VideoKit", message)
 #define LOG_INFO(message) __android_log_write(ANDROID_LOG_INFO, "VideoKit", message)
-
-jint JNI_OnLoad( JavaVM* vm, void* reserved )
-{
-	LOG_INFO("Loading native library compiled at " __TIME__ " " __DATE__);
-	sVm = vm;
-	return JNI_VERSION_1_6;
-}
 
 JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_Videokit_run(JNIEnv *env, jobject obj, jobjectArray args)
 {
@@ -48,4 +42,10 @@ JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_Videokit_run(JNIEnv *env, j
 	}
 	free(argv);
 	free(strr);
+
+}
+
+JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_Videokit_stop(JNIEnv *env, jobject obj)
+{
+	received_sigterm++;
 }
