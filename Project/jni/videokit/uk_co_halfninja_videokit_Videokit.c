@@ -22,6 +22,8 @@ JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_Videokit_run(JNIEnv *env, j
 	char **argv = NULL;
 	jstring *strr = NULL;
 
+	char *tmp = NULL;
+
 	if (args != NULL) {
 		argc = (*env)->GetArrayLength(env, args);
 		argv = (char **) malloc(sizeof(char *) * argc);
@@ -30,7 +32,10 @@ JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_Videokit_run(JNIEnv *env, j
 		for(i=0;i<argc;i++)
 		{
 			strr[i] = (jstring)(*env)->GetObjectArrayElement(env, args, i);
-			argv[i] = (char *)(*env)->GetStringUTFChars(env, strr[i], 0);
+			tmp = (char *)(*env)->GetStringUTFChars(env, strr[i], 0);
+			argv[i] = (char *)malloc(sizeof(char) * strlen(tmp));
+			strcpy(argv[i], tmp);
+			(*env)->ReleaseStringUTFChars(env, strr[i], tmp);
 		}
 	}	
 
@@ -38,7 +43,8 @@ JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_Videokit_run(JNIEnv *env, j
 	
 	for(i=0;i<argc;i++)
 	{
-		(*env)->ReleaseStringUTFChars(env, strr[i], argv[i]);
+		//(*env)->ReleaseStringUTFChars(env, strr[i], argv[i]);
+		free(argv[i]);
 	}
 	free(argv);
 	free(strr);
