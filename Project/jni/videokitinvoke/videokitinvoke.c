@@ -6,7 +6,7 @@
 
 static void* handle;
 
-JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_VideokitInvoke_run(JNIEnv* env, jobject obj, jstring libffmpeg_path, jobjectArray ffmpeg_args)
+JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_VideokitInvoke_run(JNIEnv* env, jobject obj, jstring libffmpeg_path, jstring ffmpeg_args)
 {
     const char* path;
     handle = 0;
