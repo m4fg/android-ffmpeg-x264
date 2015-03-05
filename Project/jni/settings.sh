@@ -4,7 +4,7 @@
 #NDK=/Users/jkoehl/Dev/android-ndk
 
 if [[ "x$NDK" == "x" ]]; then
-NDK=~/apps/android-ndk-r5c
+NDK=/Library/Google/android-ndk-r9d
 fi
 # i use only a small number of formats - set this to 0 if you want everything.
 # changed 0 to the default, so it'll compile shitloads of codecs normally
