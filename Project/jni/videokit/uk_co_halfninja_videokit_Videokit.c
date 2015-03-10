@@ -6,11 +6,16 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <signal.h>
 
 int main(int argc, char **argv);
 extern int received_sigterm;
 
-JavaVM *sVm = NULL;
+int g_argc;
+char** g_argv;
+JNIEnv* g_env;
+jstring g_argstring;
+const char* g_jstr;
 
 #define LOG_ERROR(message) __android_log_write(ANDROID_LOG_ERROR, "VideoKit", message)
 #define LOG_INFO(message) __android_log_write(ANDROID_LOG_INFO, "VideoKit", message)
@@ -77,6 +82,17 @@ int split (const char *str, char c, char ***arr)
     return count;
 }
 
+static void sigsegvSignalHandler(int sig)
+{
+    int i;
+    for(i=0;i<g_argc;i++)
+    {
+        free(g_argv[i]);
+    }
+    free(g_argv);
+    (*g_env)->ReleaseStringUTFChars(g_env, g_argstring, g_jstr);
+}
+
 JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_Videokit_run(JNIEnv *env, jobject obj, jstring argstring)
 {
 	int i = 0;
@@ -87,15 +103,25 @@ JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_Videokit_run(JNIEnv *env, j
 	jstr = (*env)->GetStringUTFChars(env, argstring, 0);
 
 	argc = split(jstr, '\n', &argv);
-	main(argc, argv);
+    signal(SIGSEGV , &sigsegvSignalHandler);
+    g_argc = argc;
+    g_argv = argv;
+    g_env = env;
+    g_argstring = argstring;
+    g_jstr = jstr;
 
+	main(argc, argv);
+    
+    sigsegvSignalHandler(0);
+
+    /*
 	for(i=0;i<argc;i++)
 	{
 		free(argv[i]);
 	}
 	free(argv);
 	(*env)->ReleaseStringUTFChars(env, argstring, jstr);
-
+    */
 	/*
 	jstring *strr = NULL;
 
