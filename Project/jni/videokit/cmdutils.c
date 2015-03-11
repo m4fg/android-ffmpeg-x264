@@ -68,6 +68,7 @@ AVDictionary *format_opts, *codec_opts, *resample_opts;
 static FILE *report_file;
 static int report_file_level = AV_LOG_DEBUG;
 int hide_banner = 0;
+extern int received_sigterm;
 
 void init_opts(void)
 {
@@ -421,6 +422,10 @@ int parse_optgroup(void *optctx, OptionGroup *g)
     }
 
     LOGD( "Successfully parsed a group of options.\n");
+
+    if(received_sigterm > 0){
+        return -1;
+    }
 
     return 0;
 }
